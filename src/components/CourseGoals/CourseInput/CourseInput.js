@@ -4,26 +4,51 @@ import Button from '../../UI/Button/Button';
 import './CourseInput.css';
 
 const CourseInput = props => {
-  const [enteredValue, setEnteredValue] = useState('');
+    const [enteredValue, setEnteredValue] = useState('');
 
-  const goalInputChangeHandler = event => {
-    setEnteredValue(event.target.value);
-  };
+    const [isValid, setIsValid] = useState(true);
 
-  const formSubmitHandler = event => {
-    event.preventDefault();
-    props.onAddGoal(enteredValue);
-  };
+    const goalInputChangeHandler = event => {
 
-  return (
-    <form onSubmit={formSubmitHandler}>
-      <div className="form-control">
-        <label>Course Goal</label>
-        <input type="text" onChange={goalInputChangeHandler} />
-      </div>
-      <Button type="submit">Add Goal</Button>
-    </form>
-  );
+        if(event.target.value.trim().length > 0){
+          setIsValid(true)
+        }
+        setEnteredValue(event.target.value);
+    };
+
+    const formSubmitHandler = event => {
+        event.preventDefault();
+
+        if (enteredValue.trim().length === 0) {
+            setIsValid(false);
+            // setTimeout(() => {
+            //   setIsValid(true)
+            // }, 800)
+            
+            return;
+        }
+        props.onAddGoal(enteredValue);
+    };
+
+    return (
+        <form onSubmit={formSubmitHandler}>
+            <div className="form-control">
+                <label style={{ color: !isValid ? 'red' : 'black' }}>
+                    Course Goal
+                </label>
+                <input
+                    className={!isValid ? "anim" : ""}
+                    style={{
+                        // borderColor: !isValid ? 'red' : 'black',
+                        backgroundColor: !isValid ? '#ff6868' : 'white',
+                    }}
+                    type="text"
+                    onChange={goalInputChangeHandler}
+                />
+            </div>
+            <Button type="submit">Add Goal</Button>
+        </form>
+    );
 };
 
 export default CourseInput;

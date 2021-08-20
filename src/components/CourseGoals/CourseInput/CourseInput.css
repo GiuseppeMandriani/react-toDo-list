@@ -22,3 +22,32 @@
   background: #fad0ec;
   border-color: #8b005d;
 }
+
+.anim{
+  border-color: red;
+  animation: error .3s forwards;
+}
+
+@keyframes error {
+  0%{
+    transform: translateX(-10);
+    border-color: red;
+  }
+
+  25%{
+    transform: translateX(10px);
+    border-color: red;
+  }
+  50%{
+    transform: translateX(-10px);
+    border-color: red;
+  }
+  75%{
+    transform: translateX(10px);
+    border-color: red;
+  }
+  100%{
+    transform: translateX(0);
+    border-color: red;
+  }
+}
